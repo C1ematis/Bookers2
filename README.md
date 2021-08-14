@@ -1,24 +1,6 @@
 # README
+* ログイン方法の変更
+*   views/devise/sessions/new.html.erb(ログインページ)の email_field と email を適切なものに変更
+*   config/initializers/devise.rb の#config.authentication_keys = [:email] を#を消し適切なものに変更
+*   
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
