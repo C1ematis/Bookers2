@@ -1,0 +1,22 @@
+<div class= "container">
+  <div class= "row">
+    <div class= "col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mx-auto">
+      <h2>Users info</h2>
+      <%= form_with model: @user, local:true do |f| %>
+        <div class= "form-group">
+          <label>Name</label>
+          <%= f.text_field :name, autofocus: true, class:"form-control" %>
+        </div>
+        <div class= "form-group">
+          <label>Image</label>
+          <%= f.attachment_field :profile_image, class:"form-control-file" %>
+        </div>
+        <div class= "form-group">
+          <label>Introduction</label>
+          <%= f.text_area :introduction, autofocus: true, class:"form-control" %>
+        </div>
+        <%= f.submit "Update User", class:"btn btn-secondary" %>
+      <% end %>
+    </div>
+  </div>
+</div>
