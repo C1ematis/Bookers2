@@ -20,6 +20,10 @@
 div.field, div.actions{
     margin-bottom: 10px;
 }
-header{
+#notice{
     margin-bottom: 20px;
+    color: green;
+}
+#error_explanation{
+    color: red;
 }
