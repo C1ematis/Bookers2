@@ -27,4 +27,7 @@
 *   add_index :users, :name, unique: true   migrate に記述[usersモデルのnameカラムの一意性の制約]
 *
 * サクセスメッセージ
-*   redirect_to URL, notice: "表示メッセージ"  ："" がnotice に代入されるので<%= notice %> をhtml に記入。devise によるログインは<%= notice %> のみで表示される
+*   redirect_to URL, notice: "表示メッセージ"  ：" " がnotice に代入されるので<%= notice %> をhtml に記入。devise によるログインは<%= notice %> のみで表示される
+*
+* ページ再読み込み
+* redirect_back(fallback_location: PAGE_PATH)
