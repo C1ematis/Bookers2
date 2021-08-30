@@ -23,6 +23,19 @@ class User < ApplicationRecord
   def following?(user)
     follower_user.include?(user)
   end
+  
+  def self.looks(ways, words)
+    if ways == "0" #完全
+      @user = User.where("name LIKE ?", "#{words}")
+    elsif ways == "1" #前方
+      @user = User.where("name LIKE ?", "#{words}%")
+    elsif ways == "2" #後方
+      @user = User.where("name LIKE ?", "%#{words}")
+    else #部分
+      @user = User.where("name LIKE ?", "%#{words}%")
+    end
+  end
+    
 
   attachment :profile_image
 
