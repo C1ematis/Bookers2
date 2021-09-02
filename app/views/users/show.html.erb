@@ -12,7 +12,7 @@
             <th colspan= "1"></th>
             <th>title</th>
             <th>option</th>
-            <th colspan= "1"></th>
+            <th colspan= "2"></th>
           </tr>
         </thead>
         <tbody>
@@ -21,7 +21,8 @@
               <td><%= link_to user_path(book.user.id) do %><%= attachment_image_tag book.user, :profile_image, size:"40x40", format: 'jpeg', fallback:"no_image.jpg" %><% end %></td>
               <td><%= link_to book.title, book_path(book) %></td>
               <td><%= book.body %></td>
-              <td><i class="fas fa-heart"></i> <%= book.favorites.count %>コメント数：<%= book.book_comments.count %></td>
+              <td id= "favorite-btn"><%= render 'favorites/favorite-btn', book: book %></td>
+              <td>コメント数：<%= book.book_comments.count %></td>
             </tr>
           <% end %>
         </tbody>
