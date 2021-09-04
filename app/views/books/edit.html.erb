@@ -23,6 +23,21 @@
           <label>Option</label>
           <%= f.text_area :body, autofocus: true, class:"form-control" %>
         </div>
+        <div id="rate-edit"><%= f.label :star %></div>
+          <script>
+          $('#rate-edit').empty();
+          $('#rate-edit').text("Star : ");
+          $('#rate-edit').raty({
+            size: 36,
+            starOff:  '<%= asset_path('star-off.png') %>',
+            starOn : '<%= asset_path('star-on.png') %>',
+            starHalf: '<%= asset_path('star-half.png') %>',
+            half: true,
+            readOnly: true,
+            score: <%= @book.star %>,
+          });
+          </script>
+
         <%= f.submit "Update Book", class:"btn btn-success form-group" %>
       <% end %>
       <div>

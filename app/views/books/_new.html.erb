@@ -9,5 +9,21 @@
     <label>option</label>
     <%= f.text_area :body , class:"form-control"%>
   </div>
+  <div class="form-group" id="rate-new">
+    <label>star</label>
+    <%= f.hidden_field :star %>
+  </div>
+  <script>
+    $("#rate-new").empty();
+    $('#rate-new').text("Star : ");
+    $("#rate-new").raty({
+      size: 36,
+      starOff: '<%= asset_path('star-off.png') %>',
+      starOn: '<%= asset_path('star-on.png') %>',
+      starHalf: '<%= asset_path('star-half.png') %>',
+      scoreName: 'book[star]',
+      half: true,
+    })
+  </script>
   <%= f.submit "Create Book", class:"btn btn-success" %>
 <% end %>

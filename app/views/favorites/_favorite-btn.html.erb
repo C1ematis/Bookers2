@@ -8,3 +8,19 @@
     <i class="far fa-heart"></i><%= book.favorites.count %>
   <% end %>
 <% end %>
+<% if request.fullpath != book_path(book) %>
+ &ensp;コメント：<%= book.book_comments.count %>
+<div id="rate-<%= book.id %>" class= "text-nowrap"></div></td>
+  <script>
+    $('#rate-<%= book.id %>').empty();
+    $('#rate-<%= book.id %>').raty({
+      size: 36,
+      starOff:  '<%= asset_path('star-off.png') %>',
+      starOn : '<%= asset_path('star-on.png') %>',
+      starHalf: '<%= asset_path('star-half.png') %>',
+      half: true,
+      readOnly: true,
+      score: <%= book.star %>,
+    });
+  </script>
+<% end %>

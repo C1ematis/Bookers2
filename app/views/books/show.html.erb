@@ -11,25 +11,43 @@
             <tr>
               <td><%= link_to user_path(@user) do %>
                 <%= attachment_image_tag @book.user, :profile_image, size:"40x40", format: 'jpeg', fallback:"no_image.jpg" %>
-                <br><%= @user.name %>
+                <%= @user.name %>
               <% end %></td>
-              <td><%= link_to @book.title, book_path(@book) %></td>
-              <td><%= @book.body %></td>
+              <td id= "favorite-btn<%= @book.id %>" class= "text-nowrap">
+                <%= render 'favorites/favorite-btn', book: @book %>
+              </td>
+              <td class= "text-nowrap">
+                コメント数：<%= @book.book_comments.count %>
+              </td>
+              <td id="rate-show" class= "text-nowrap"></td>
+                <script>
+                  $('#rate-show').empty()
+                  $('#rate-show').raty({
+                    size: 36,
+                    starOff:  '<%= asset_path('star-off.png') %>',
+                    starOn : '<%= asset_path('star-on.png') %>',
+                    starHalf: '<%= asset_path('star-half.png') %>',
+                    half: true,
+                    readOnly: true,
+                    score: <%= @book.star %>,
+                  });
+                </script>
               <% if @book.user.id == current_user.id %>
                 <td><%= link_to "Edit", edit_book_path(@book), class: "btn btn-success btn-sm" %></td>
                 <td><%= link_to "Destroy", book_path(@book), method: :delete, class: "btn btn-danger btn-sm", "data-confirm" => "本当に消しますか？" %></td>
               <% end %>
-              <td id= "favorite-btn">
-                <%= render 'favorites/favorite-btn', book: @book %>
-              </td>
-              <td>
-                コメント数：<%= @book.book_comments.count %>
-              </td>
             </tr>
         </tbody>
       </table>
-
-      <table class= "table table-borderless table-sm" id= "comment">
+      <div>
+        Title<br>
+        <%= link_to @book.title, book_path(@book) %>
+      </div>
+      <div class="mt-2">
+        Option<br>
+        <%= @book.body %>
+      </div>
+      <table class= "table table-borderless table-sm mt-4" id= "comment">
         <tr>
           <th>コメント</th>
           <th colspan= "1" class= "col-md-9"></th>
