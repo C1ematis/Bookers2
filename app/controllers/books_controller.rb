@@ -23,7 +23,6 @@ class BooksController < ApplicationController
   def index
     @user = User.find(current_user.id)
     @books = Book.all
-    @book = Book.find(current_user.id)
   end
 
   def edit
