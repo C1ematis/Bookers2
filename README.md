@@ -7,9 +7,7 @@
 * アクセス制限
 *   before_action :correct_user, only: [:edit, :update]
 *
-*         :
-*         :
-*
+*     :
 *  private
 *    def correct_user
 *    book = Book.find(params[:id])
