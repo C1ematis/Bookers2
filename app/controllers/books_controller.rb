@@ -1,10 +1,14 @@
 class BooksController < ApplicationController
 
     before_action :correct_user, only: [:edit, :update]
+    helper_method :sort_column, :sort_direction
 
   def create
     @book = Book.new(book_params)
     @book.user_id = current_user.id
+    if @book.star.blank?
+      @book.star= 0
+    end
     if @book.save
       redirect_to book_path(@book.id), notice: "You have created book successfully."
     else
@@ -22,7 +26,16 @@ class BooksController < ApplicationController
 
   def index
     @user = User.find(current_user.id)
-    @books = Book.all
+    @books = Book.order("#{sort_column} #{sort_direction}")
+    # @books = Book.joins(:favorites).group("favorites.book_id").order(Arel.sql(:sort))
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
+  end
+
+  def sort_column
+    Book.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
   end
 
   def edit

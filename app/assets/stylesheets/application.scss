@@ -30,6 +30,13 @@ div.field, div.actions{
 .favorite{
     color: red;
 }
-.comment{
-    display: inline-block;
+
+a.current{
+    color: red;
+}
+.asc:after{
+    content: "↑";
+}
+.desc:after{
+    content: "↓";
 }

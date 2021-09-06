@@ -48,13 +48,7 @@
         <%= @book.body %>
       </div>
       <table class= "table table-borderless table-sm mt-4" id= "comment">
-        <tr>
-          <th>コメント</th>
-          <th colspan= "1" class= "col-md-9"></th>
-          <th colspan= "1" class= "col-md-1"></th>
-        </tr>
          <%= render 'book_comments/comment', book: @book, user: @user %>
-
       </table>
 
       <div class= "form-group">

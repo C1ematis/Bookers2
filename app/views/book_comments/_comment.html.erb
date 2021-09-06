@@ -1,4 +1,8 @@
-
+        <tr>
+          <th>コメント</th>
+          <th colspan= "1" class= "col-md-9"></th>
+          <th colspan= "1" class= "col-md-1"></th>
+        </tr>
         <% book.book_comments.each do |comment| %>
         <tr>
           <td><%= link_to user_path(comment.user.id) do %>
