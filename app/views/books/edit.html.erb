@@ -23,6 +23,10 @@
           <label>Option</label>
           <%= f.text_area :body, autofocus: true, class:"form-control" %>
         </div>
+        <div class= "form-group">
+          <label>tag</label>
+          <%= f.text_field :tag_name, value: @tag_list, placeholder:",で区切ってください" %>
+        </div>
         <div id="rate-edit"><%= f.label :star %></div>
           <script>
           $('#rate-edit').empty();

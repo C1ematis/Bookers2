@@ -35,8 +35,14 @@
               <td style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden; max-width: 0; width: 20%"><%= link_to book.title, book_path(book) %></td>
               <td style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden; max-width: 0; width: 50%"><%= book.body %></td>
               <td id= "favorite-btn<%= book.id %>" class= "text-nowrap">
-                <%= render 'favorites/favorite-btn', book: book %>
+                <%#= render 'favorites/favorite-btn', book: book %>
+                </td>
             </tr>
+            <script>
+              $(document).on('turbolinks:load', function () {
+                $('#favorite-btn<%= book.id %>').html("<%= j(render 'favorites/favorite-btn', book: book) %>");
+              });
+            </script>
           <% end %>
         </tbody>
       </table>

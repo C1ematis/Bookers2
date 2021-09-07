@@ -6,10 +6,12 @@ class BooksController < ApplicationController
   def create
     @book = Book.new(book_params)
     @book.user_id = current_user.id
+    tag_list = params[:book][:tag_name].split(",")
     if @book.star.blank?
       @book.star= 0
     end
     if @book.save
+      @book.tag_save(tag_list)
       redirect_to book_path(@book.id), notice: "You have created book successfully."
     else
       @user = User.find(current_user.id)
@@ -21,12 +23,18 @@ class BooksController < ApplicationController
   def show
     @book = Book.find(params[:id])
     @user = User.find(@book.user.id)
+    @tag_list = @book.tags.all
     @book_comment = BookComment.new
   end
 
   def index
     @user = User.find(current_user.id)
-    @books = Book.order("#{sort_column} #{sort_direction}")
+    if params[:tag_id]
+      @tag = Tag.find(params[:tag_id])
+      @books = @tag.books.order("#{sort_column} #{sort_direction}")
+    else
+      @books = Book.order("#{sort_column} #{sort_direction}")
+    end
     # @books = Book.joins(:favorites).group("favorites.book_id").order(Arel.sql(:sort))
   end
 
@@ -40,11 +48,14 @@ class BooksController < ApplicationController
 
   def edit
     @book = Book.find(params[:id])
+    @tag_list = @book.tags.pluck(:tag_name).join(",")
   end
 
   def update
     @book = Book.find(params[:id])
+    tag_list = params[:book][:tag_name].split(",")
     if @book.update(book_params)
+      @book.tag_save(tag_list)
       redirect_to book_path(@book.id), notice: "You have updated book successfully."
     else
       render :edit

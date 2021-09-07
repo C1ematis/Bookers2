@@ -6,47 +6,53 @@
     </div>
     <div class= "col-md-8 offset-md-1">
       <h2>Book detail</h2>
-      <table class= "table">
+      <table class= "table table-bordered">
         <tbody>
-            <tr>
-              <td><%= link_to user_path(@user) do %>
+          <tr>
+            <td <%= table = @book.user.id == current_user.id ? "width= 50%" : "colspan= 2" %>>
+              <%= link_to user_path(@user) do %>
                 <%= attachment_image_tag @book.user, :profile_image, size:"40x40", format: 'jpeg', fallback:"no_image.jpg" %>
                 <%= @user.name %>
-              <% end %></td>
-              <td id= "favorite-btn<%= @book.id %>" class= "text-nowrap">
-                <%= render 'favorites/favorite-btn', book: @book %>
-              </td>
-              <td class= "text-nowrap">
-                コメント数：<%= @book.book_comments.count %>
-              </td>
-              <td id="rate-show" class= "text-nowrap"></td>
-                <script>
-                  $('#rate-show').empty()
-                  $('#rate-show').raty({
-                    size: 36,
-                    starOff:  '<%= asset_path('star-off.png') %>',
-                    starOn : '<%= asset_path('star-on.png') %>',
-                    starHalf: '<%= asset_path('star-half.png') %>',
-                    half: true,
-                    readOnly: true,
-                    score: <%= @book.star %>,
-                  });
-                </script>
-              <% if @book.user.id == current_user.id %>
-                <td><%= link_to "Edit", edit_book_path(@book), class: "btn btn-success btn-sm" %></td>
-                <td><%= link_to "Destroy", book_path(@book), method: :delete, class: "btn btn-danger btn-sm", "data-confirm" => "本当に消しますか？" %></td>
               <% end %>
-            </tr>
+            </td>
+            <% if @book.user.id == current_user.id %>
+              <td class="d-flex justify-content-around">
+                <%= link_to "Edit", edit_book_path(@book), class: "btn btn-success" %>
+                <%= link_to "Destroy", book_path(@book), method: :delete, class: "btn btn-danger", "data-confirm" => "本当に消しますか？" %>
+              </td>
+            <% end %>
+          </tr>
+          <tr>
+            <th width= "50%" >tag</th>
+            <td id= "favorite-btn<%= @book.id %>" class= "text-nowrap", rowspan= "2"  align="center"></td>
+              <script>
+                $(document).on('turbolinks:load', function () {
+                  $('#favorite-btn<%= @book.id %>').html("<%= j(render 'favorites/favorite-btn', book: @book) %>");
+                });
+              </script>
+          </tr>
+          <tr>
+            <td>
+            <% @tag_list.each do |tag| %>
+              <%= link_to tag.tag_name, books_path(tag_id: tag.id) %>
+            <% end %>
+            </td>
+          </tr>
+          <tr>
+            <th colspan= "2">Title</th>
+          </tr>
+          <tr>
+            <td colspan= "2"><%= link_to @book.title, book_path(@book) %></td>
+          </tr>
+          <tr>
+            <th colspan= "2">Option</th>
+          </tr>
+          <tr>
+            <td colspan= "2"><%= @book.body %></td>
+          </tr>
         </tbody>
       </table>
-      <div>
-        Title<br>
-        <%= link_to @book.title, book_path(@book) %>
-      </div>
-      <div class="mt-2">
-        Option<br>
-        <%= @book.body %>
-      </div>
+
       <table class= "table table-borderless table-sm mt-4" id= "comment">
          <%= render 'book_comments/comment', book: @book, user: @user %>
       </table>

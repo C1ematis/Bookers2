@@ -9,6 +9,10 @@
     <label>option</label>
     <%= f.text_area :body , class:"form-control"%>
   </div>
+  <div class= "form-group">
+    <label>tag</label>
+    <%= f.text_field :tag_name, placeholder:",で区切ってください", class:"form-control" %>
+  </div>
   <div class="form-group" id="rate-new">
     <label>star</label>
     <%= f.hidden_field :star %>
