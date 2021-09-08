@@ -29,9 +29,18 @@ class BooksController < ApplicationController
 
   def index
     @user = User.find(current_user.id)
-    if params[:tag_id]
-      @tag = Tag.find(params[:tag_id])
-      @books = @tag.books.order("#{sort_column} #{sort_direction}")
+    if params[:word]
+      @word = params[:word]
+      @search_kind = params[:search_kind]
+      if @search_kind == 'タイトル'
+        @books = Book.search(@word).order("#{sort_column} #{sort_direction}")
+        if @books.blank?
+          @books = "no_search"
+        end
+      else
+        @tag = Tag.search(@word)
+        @books = @tag.any? ? @tag[0].books.order("#{sort_column} #{sort_direction}") : "no_search"
+      end
     else
       @books = Book.order("#{sort_column} #{sort_direction}")
     end
@@ -45,6 +54,7 @@ class BooksController < ApplicationController
   def sort_column
     Book.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
   end
+
 
   def edit
     @book = Book.find(params[:id])

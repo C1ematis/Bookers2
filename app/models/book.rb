@@ -24,6 +24,10 @@ class Book < ApplicationRecord
       self.tags << book_tag
     end
   end
+  
+  scope :search, -> ( word ){
+    where("title like :q ", q: "%#{word}%") if word.present?
+  }
 
   def self.looks(ways, words)
     if ways == "0" #完全
